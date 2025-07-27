@@ -1,10 +1,34 @@
-annotated-types==0.7.0
-click==8.1.8
+# Core Framework
 fastapi==0.115.12
+uvicorn[standard]==0.34.2
+
+# Data Validation
 pydantic==2.11.4
-pydantic_core==2.33.2
-starlette==0.46.2
+pydantic-core==2.33.2
 typing-inspection==0.4.0
-uvicorn==0.34.2
-pytest
-httpx
+annotated-types==0.7.0
+email-validator==2.2.0
+
+# Database
+sqlalchemy[asyncio]==2.0.41
+asyncpg==0.30.0       # For PostgreSQL async driver (optional)
+databases==0.9.0      # Optional, for async DB support if needed
+
+# Migrations
+alembic==1.13.2
+
+# Auth & Security
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+python-jose[cryptography]==3.3.0
+
+# Testing
+pytest==8.4.1
+pytest-asyncio==0.23.8
+httpx==0.28.1
+anyio==4.9.0
+
+# Dev Tools
+black==24.4.2
+isort==5.13.2
+pylama==8.4.1

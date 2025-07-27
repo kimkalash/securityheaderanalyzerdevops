@@ -1,5 +1,8 @@
 from fastapi import FastAPI
-from app.routes import user_routes, scan_routes, header_routes
+from app.routes import user_routes
+from app.routes import scan_routes
+from app.routes import header_routes
+
 
 # Initialize the FastAPI application
 app = FastAPI(
