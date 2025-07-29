@@ -1,4 +1,6 @@
 from pydantic import BaseModel, EmailStr, ConfigDict
+from typing import Any, Optional
+
 
 
 class UserCreate(BaseModel):
@@ -30,3 +32,8 @@ class HeaderResultCreate(BaseModel):
     header_value: str
 
     model_config = ConfigDict(from_attributes=True)
+
+class APIResponse(BaseModel):
+    success: bool
+    data: Optional[Any] = None
+    error: Optional[dict] = None
