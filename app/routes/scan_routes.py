@@ -4,34 +4,28 @@ from app.db import get_db
 from app.services import create_scan, get_user_scans
 from app.models import Scan
 from pydantic import BaseModel
+from app.auth import get_current_user
 
-
-# Request schema
 class ScanCreate(BaseModel):
-    user_id: int
-    scan_url: str
+    scan_url: str  # ✅ Removed user_id (use current_user.id instead)
 
+router = APIRouter(prefix="/scans", tags=["Scans"])
 
-# Response schema
-class ScanResponse(BaseModel):
-    id: int
-    scan_url: str
+@router.post("/", response_model=dict)
+def new_scan(
+    payload: ScanCreate,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    """Create a scan for the logged-in user only."""
+    scan = create_scan(db, user_id=current_user.id, scan_url=payload.scan_url)
+    return {"id": scan.id, "scan_url": scan.scan_url}
 
-    class Config:
-        from_attributes = True
-
-
-router = APIRouter()
-
-
-@router.post("/", response_model=ScanResponse)
-def new_scan(payload: ScanCreate, db: Session = Depends(get_db)):
-    scan: Scan = create_scan(db, payload.user_id, payload.scan_url)
-    return scan
-
-
-@router.get("/{user_id}", response_model=list[ScanResponse])
-def list_scans(user_id: int, db: Session = Depends(get_db)):
-    scans = get_user_scans(db, user_id)
-    return scans
-
+@router.get("/", response_model=list[dict])
+def list_my_scans(
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    """List scans that belong to the logged-in user."""
+    scans = get_user_scans(db, current_user.id)
+    return [{"id": s.id, "scan_url": s.scan_url} for s in scans]
