@@ -8,12 +8,12 @@ from sqlalchemy.orm import Session
 from app.db import get_db
 from app.services import get_user_by_id  # We already have this function
 from app.settings import settings
+from app.settings import settings
 
-from app import config
+SECRET_KEY = settings.SECRET_KEY
+ALGORITHM = settings.JWT_ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
-SECRET_KEY = config.SECRET_KEY
-ALGORITHM = config.ALGORITHM
-ACCESS_TOKEN_EXPIRE_MINUTES = config.ACCESS_TOKEN_EXPIRE_MINUTES
 
 
 # =======================

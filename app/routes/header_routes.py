@@ -1,4 +1,4 @@
-ffrom fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.db import get_db
 from app.services import create_header_result, Scan
