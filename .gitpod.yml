@@ -5,7 +5,13 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: pip install -r requirements.txt
-    command: python main.py
+  - name: Start Security Header Analyzer
+    init: |
+      pip install -r requirements.txt
+    command: |
+      export SECRET_KEY=$SECRET_KEY
+      export JWT_ALGORITHM=$JWT_ALGORITHM
+      export ACCESS_TOKEN_EXPIRE_MINUTES=$ACCESS_TOKEN_EXPIRE_MINUTES
+      uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 
